@@ -24,7 +24,6 @@ Audio source plugin for Spotube that downloads from [flacdownloader.com](https:/
 
 ## Notes
 - The plugin uses flacdownloader.com's internal API
-- Android browser User-Agent is used to avoid blocking
 - Download tokens are generated on each request
 
 ## Source code
