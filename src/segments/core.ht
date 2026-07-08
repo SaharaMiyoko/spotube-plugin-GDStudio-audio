@@ -16,18 +16,17 @@ class CorePlugin {
     return "
 # Flac Downloader Audio Plugin
 
-Audio source plugin for Spotube that downloads from [flacdownloader.com](https://flacdownloader.com).
+Audio source plugin for Spotube that downloads from [GDStudio](https://music.gdstudio.xyz).
 
 ## Supported formats
 - FLAC (lossless)
 - MP3 (lossy, 320kbps)
 
 ## Notes
-- The plugin uses flacdownloader.com's internal API
-- Download tokens are generated on each request
+- The plugin uses GDStudio's API
 
 ## Source code
-https://github.com/tuusuario/spotube-plugin-flac-audio
+https://github.com/SaharaMiyoko/spotube-plugin-GDStudio-audio/
 "
   }
 
