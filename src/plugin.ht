@@ -1,5 +1,4 @@
 import "module:std" as std
-
 import { AudioSourceEndpoint } from './segments/audio_source.ht'
 import { CorePlugin } from './segments/core.ht'
 
@@ -9,30 +8,16 @@ var HttpBaseOptions = std.HttpBaseOptions
 class FlacAudioSourcePlugin {
   var audioSource: AudioSourceEndpoint
   var core: CorePlugin
-
   var api: HttpClient
-  var deezerApi: HttpClient
 
-  construct (){
+  construct () {
     api = HttpClient(
       HttpBaseOptions(
-        baseUrl: "https://flacdownloader.com",
-        followRedirects: true,
-        headers: {
-          "Referer": "https://flacdownloader.com/",
-          "Origin": "https://flacdownloader.com",
-        }.toJson(),
-      )
-    )
-
-    deezerApi = HttpClient(
-      HttpBaseOptions(
-        baseUrl: "https://api.deezer.com",
+        baseUrl: "https://music-api.gdstudio.xyz",
         followRedirects: true,
       )
     )
-
-    audioSource = AudioSourceEndpoint(api, deezerApi)
+    audioSource = AudioSourceEndpoint(api)
     core = CorePlugin(api)
   }
 }
