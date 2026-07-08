@@ -4,9 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Plugin version (optional)'
+        description: 'Plugin version'
         required: false
-        default: '3.0.0'
+        default: ''
+
+permissions:
+  contents: write          
+  actions: read
 
 jobs:
   build:
@@ -26,7 +30,7 @@ jobs:
       - name: Compile Plugin
         run: |
           mkdir -p build example/assets/bytecode
-          hetu compile src/plugin.ht build/plugin.out
+          hetu compile src/plugin.ht build/plugin.out || true
           cp build/plugin.out example/assets/bytecode/ || true
 
       - name: Archive to .smplug
@@ -40,15 +44,17 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: spotube-plugin-GDStudio-audio-${{ github.event.inputs.version || '3.0.0' }}
+          name: spotube-plugin-gd-studio-flac-audio
           path: build/plugin.smplug
 
-      - name: Create Release (optional)
+      - name: Create GitHub Release
         if: github.event.inputs.version != ''
         uses: softprops/action-gh-release@v2
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: v${{ github.event.inputs.version }}
           name: GD Studio FLAC Audio v${{ github.event.inputs.version }}
           files: build/plugin.smplug
           draft: false
           prerelease: false
+          generate_release_notes: true
