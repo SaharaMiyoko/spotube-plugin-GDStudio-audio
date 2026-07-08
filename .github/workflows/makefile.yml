@@ -1,0 +1,54 @@
+name: Manual Build - GD Studio FLAC Audio Plugin
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Plugin version (optional)'
+        required: false
+        default: '3.0.0'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Activate Hetu Script
+        run: dart pub global activate hetu_script_dev_tools
+
+      - name: Compile Plugin
+        run: |
+          mkdir -p build example/assets/bytecode
+          hetu compile src/plugin.ht build/plugin.out
+          cp build/plugin.out example/assets/bytecode/ || true
+
+      - name: Archive to .smplug
+        run: |
+          mkdir -p build/archive
+          cp plugin.json build/plugin.out assets/logo.png build/archive/ 2>/dev/null || true
+          cd build/archive
+          zip -r ../plugin.smplug ./
+          cd ../..
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spotube-plugin-GDStudio-audio-${{ github.event.inputs.version || '3.0.0' }}
+          path: build/plugin.smplug
+
+      - name: Create Release (optional)
+        if: github.event.inputs.version != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          name: GD Studio FLAC Audio v${{ github.event.inputs.version }}
+          files: build/plugin.smplug
+          draft: false
+          prerelease: false
