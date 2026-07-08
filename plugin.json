@@ -1,11 +1,11 @@
 {
-  "version": "2.1.0",
-  "name": "Flac Downloader Audio",
-  "author": "aztecempire",
-  "description": "FLAC audio source plugin for Spotube using flacdownloader.com",
+  "version": "1.0.0",
+  "name": "GD Studio FLAC Audio",
+  "author": "aztecempire (original) + Sahara Miyoko",
+  "description": "FLAC lossless + MP3 320kbps audio source plugin for Spotube using GD Studio Music API[](https://music-api.gdstudio.xyz). Personal use only.",
   "entryPoint": "FlacAudioSourcePlugin",
   "apis": ["localstorage"],
   "abilities": ["audio-source"],
-  "repository": "https://github.com/aztecempire/spotube-plugin-flac-audio",
+  "repository": "https://github.com/SaharaMiyoko/spotube-plugin-GDStudio-audio",
   "pluginApiVersion": "2.0.0"
 }
